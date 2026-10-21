@@ -3,150 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1d4ed8">
-  <title>Student Attendance & Engagement Dashboard</title>
+  <title>CampusPulse | Student Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-mark"><i data-lucide="graduation-cap"></i></div>
-        <div><strong>CampusPulse</strong><small>Student analytics</small></div>
-      </div>
+      <div class="brand"><div class="brand-mark">C</div><div><b>CampusPulse</b><small>STUDENT MANAGEMENT</small></div></div>
       <div class="profile-mini">
-        <div class="avatar">RM</div>
-        <div><strong>Ram Pratap Maurya</strong><small>BCA · Semester 5</small></div>
+        <img id="adminAvatar" class="avatar admin-avatar" src="https://i.pravatar.cc/120?img=12" alt="Admin profile">
+        <div class="profile-text"><b id="adminNameLabel">Ram Pratap Maurya</b><small>Administrator</small></div>
+        <button class="dots" aria-label="Admin settings" id="adminEditBtn">•••</button>
       </div>
-      <nav class="nav-menu" aria-label="Main navigation">
-        <span class="nav-label">WORKSPACE</span>
-        <button class="nav-link active" data-view="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</button>
-        <button class="nav-link" data-view="students"><i data-lucide="users"></i> Students</button>
-        <button class="nav-link" data-view="attendance"><i data-lucide="calendar-check"></i> Attendance</button>
-        <button class="nav-link" data-view="engagement"><i data-lucide="chart-no-axes-combined"></i> Engagement</button>
-        <button class="nav-link" data-view="reports"><i data-lucide="file-spreadsheet"></i> Reports</button>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-page="students"><span>♙</span> Students <em id="studentNavCount">8</em></button>
+        <button class="nav-item" data-page="attendance"><span>✓</span> Attendance</button>
+        <button class="nav-item" data-page="engagement"><span>◈</span> Engagement</button>
+        <button class="nav-item" data-page="reports"><span>▤</span> Reports</button>
       </nav>
-      <div class="sidebar-footer">
-        <div class="project-note"><i data-lucide="info"></i><div><strong>College Project</strong><small>Demo data is stored in this browser.</small></div></div>
-        <small class="version">BCA PROJECT · v1.0</small>
-      </div>
+      <div class="nav-label settings-label">PREFERENCES</div>
+      <nav class="nav">
+        <button class="nav-item" data-page="settings"><span>⚙</span> Settings</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-icon">?</div><div><b>Need help?</b><small>Manage your classroom</small></div></div>
     </aside>
 
-    <main class="main-area">
+    <main class="main">
       <header class="topbar">
-        <button class="icon-button menu-toggle" id="menuToggle" aria-label="Toggle navigation"><i data-lucide="menu"></i></button>
-        <div class="breadcrumb"><span>Workspace</span><i data-lucide="chevron-right"></i><strong id="pageCrumb">Dashboard</strong></div>
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <b id="crumb">Dashboard</b></div>
         <div class="top-actions">
-          <span class="demo-pill"><span></span> Demo mode</span>
-          <button class="icon-button" id="resetDemo" title="Restore sample data" aria-label="Restore sample data"><i data-lucide="rotate-ccw"></i></button>
-          <div class="top-avatar">RM</div>
+          <button class="icon-btn" id="themeToggle" title="Toggle dark mode">◐</button>
+          <button class="icon-btn notification" title="Notifications">♧<i></i></button>
+          <button class="top-profile" id="topProfile"><img id="topAdminAvatar" src="https://i.pravatar.cc/120?img=12" alt=""><span id="topAdminName">Ram Pratap</span><b>⌄</b></button>
         </div>
       </header>
 
-      <section class="page-content">
-        <div class="page-heading">
-          <div>
-            <p class="eyebrow">STUDENT SUCCESS OVERVIEW</p>
-            <h1 id="pageTitle">Dashboard</h1>
-            <p class="subheading" id="pageDescription">Track attendance and classroom engagement in one place.</p>
-          </div>
-          <div class="heading-date"><i data-lucide="calendar-days"></i><span id="todayLabel"></span></div>
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row"><div><div class="eyebrow">TUESDAY, OCTOBER 21, 2026</div><h1>Good morning, Ram <span>✦</span></h1><p>Here’s what’s happening with your classroom today.</p></div><button class="primary-btn" data-goto="attendance">＋ Mark attendance</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon purple">♙</span></div><strong id="totalStudents">8</strong><small><span class="positive">● Active roster</span> this semester</small><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Present today</span><span class="stat-icon green">✓</span></div><strong id="presentCount">6</strong><small><span class="positive" id="presentRate">75%</span> of students</small><div class="progress"><i id="presentBar" style="width:75%"></i></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Absent today</span><span class="stat-icon orange">↘</span></div><strong id="absentCount">1</strong><small><span class="warning-text" id="absentRate">12.5%</span> of students</small><div class="progress orange-progress"><i id="absentBar" style="width:12.5%"></i></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Avg. engagement</span><span class="stat-icon blue">◈</span></div><strong id="avgEngagement">86<span class="unit">/100</span></strong><small><span class="positive">↑ Good</span> class participation</small><div class="progress blue-progress"><i id="engagementBar" style="width:86%"></i></div></article>
         </div>
-
-        <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-        <section class="view active" id="view-dashboard">
-          <div class="stats-grid">
-            <article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon blue"><i data-lucide="users"></i></span></div><div class="stat-value" id="totalStudents">0</div><div class="stat-foot"><span class="dot blue-dot"></span> Enrolled in this class</div></article>
-            <article class="stat-card"><div class="stat-top"><span>Present today</span><span class="stat-icon green"><i data-lucide="user-check"></i></span></div><div class="stat-value" id="presentToday">0</div><div class="stat-foot"><span class="dot green-dot"></span> Marked present for selected day</div></article>
-            <article class="stat-card"><div class="stat-top"><span>Absent today</span><span class="stat-icon red"><i data-lucide="user-x"></i></span></div><div class="stat-value" id="absentToday">0</div><div class="stat-foot"><span class="dot red-dot"></span> Marked absent for selected day</div></article>
-            <article class="stat-card"><div class="stat-top"><span>Attendance rate</span><span class="stat-icon purple"><i data-lucide="trending-up"></i></span></div><div class="stat-value" id="attendanceRate">0%</div><div class="progress-track"><span id="attendanceProgress"></span></div><div class="stat-foot">Overall recorded attendance</div></article>
-          </div>
-
-          <div class="dashboard-grid">
-            <article class="panel attendance-panel">
-              <div class="panel-heading"><div><h2>Attendance overview</h2><p>Daily attendance for the latest 7 days</p></div><span class="panel-icon"><i data-lucide="chart-no-axes-column"></i></span></div>
-              <div class="chart-legend"><span><i class="legend-dot present-legend"></i> Present</span><span><i class="legend-dot absent-legend"></i> Absent</span></div>
-              <div class="bar-chart" id="attendanceChart" aria-label="Attendance chart"></div>
-            </article>
-            <article class="panel engagement-panel">
-              <div class="panel-heading"><div><h2>Engagement snapshot</h2><p>Average class performance</p></div><span class="panel-icon purple-panel"><i data-lucide="sparkles"></i></span></div>
-              <div class="engagement-score"><div class="score-ring" id="scoreRing"><div><strong id="avgEngagement">0</strong><small>/ 100</small></div></div><div><strong>Class engagement</strong><p id="engagementMessage">Add engagement scores to see trends.</p></div></div>
-              <div class="mini-metrics"><div><span>Participation</span><strong id="avgParticipation">0/100</strong></div><div><span>Class activity</span><strong id="avgActivity">0/100</strong></div><div><span>Assignments done</span><strong id="assignmentRate">0%</strong></div></div>
-            </article>
-          </div>
-
-          <article class="panel table-panel">
-            <div class="panel-heading"><div><h2>Students needing attention</h2><p>Attendance below 75%</p></div><button class="text-button" data-go="reports">View report <i data-lucide="arrow-up-right"></i></button></div>
-            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Roll number</th><th>Attendance</th><th>Status</th></tr></thead><tbody id="lowAttendancePreview"></tbody></table></div>
-          </article>
-        </section>
-
-        <section class="view" id="view-students">
-          <div class="toolbar">
-            <div class="search-box"><i data-lucide="search"></i><input id="studentSearch" type="search" placeholder="Search name, roll number or email..." aria-label="Search students"></div>
-            <div class="toolbar-right"><select id="classFilter" aria-label="Filter by class"><option value="">All classes</option></select><button class="primary-button" id="addStudentBtn"><i data-lucide="plus"></i> Add student</button></div>
-          </div>
-          <article class="panel table-panel">
-            <div class="panel-heading"><div><h2>Student directory</h2><p id="studentCountLabel">Manage your class roster</p></div><span class="subtle-tag">Local demo data</span></div>
-            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Roll number</th><th>Class</th><th>Email</th><th>Attendance</th><th>Actions</th></tr></thead><tbody id="studentsTable"></tbody></table></div>
-          </article>
-        </section>
-
-        <section class="view" id="view-attendance">
-          <div class="toolbar attendance-toolbar">
-            <div><label class="field-label" for="attendanceDate">Attendance date</label><input type="date" id="attendanceDate"></div>
-            <div class="toolbar-right"><button class="secondary-button" id="markAllPresent"><i data-lucide="check-check"></i> Mark all present</button><button class="primary-button" id="saveAttendance"><i data-lucide="save"></i> Save attendance</button></div>
-          </div>
-          <div class="notice"><i data-lucide="info"></i><span>Choose Present or Absent for each student. Saving again updates that date instead of creating duplicate records.</span></div>
-          <article class="panel table-panel">
-            <div class="panel-heading"><div><h2>Mark attendance</h2><p id="attendanceDateCaption">Daily class register</p></div><span class="subtle-tag" id="attendanceMarkedCount">0 marked</span></div>
-            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Roll number</th><th>Attendance status</th><th>Overall attendance</th></tr></thead><tbody id="attendanceTable"></tbody></table></div>
-          </article>
-          <article class="panel table-panel history-panel">
-            <div class="panel-heading"><div><h2>Previous attendance records</h2><p>Records saved in this browser</p></div></div>
-            <div class="table-wrap"><table><thead><tr><th>Date</th><th>Present</th><th>Absent</th><th>Recorded students</th></tr></thead><tbody id="attendanceHistory"></tbody></table></div>
-          </article>
-        </section>
-
-        <section class="view" id="view-engagement">
-          <div class="engagement-intro panel"><div class="engagement-intro-icon"><i data-lucide="target"></i></div><div><h2>Measure participation, not just presence</h2><p>Use a simple 0–100 scale for participation and classroom activity. Mark assignment completion for each student.</p></div></div>
-          <article class="panel table-panel">
-            <div class="panel-heading"><div><h2>Student engagement tracker</h2><p>Changes are saved to LocalStorage when you click Save scores.</p></div><button class="primary-button" id="saveEngagement"><i data-lucide="save"></i> Save scores</button></div>
-            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Participation (0–100)</th><th>Assignment</th><th>Class activity (0–100)</th><th>Average</th></tr></thead><tbody id="engagementTable"></tbody></table></div>
-          </article>
-          <div class="dashboard-grid engagement-lower">
-            <article class="panel"><div class="panel-heading"><div><h2>Engagement distribution</h2><p>Average score by metric</p></div></div><div id="engagementBars" class="metric-bars"></div></article>
-            <article class="panel"><div class="panel-heading"><div><h2>How scores are calculated</h2></div></div><div class="formula-list"><div><span class="formula-number">01</span><div><strong>Participation</strong><p>Class discussion and answering questions.</p></div></div><div><span class="formula-number">02</span><div><strong>Assignment completion</strong><p>Completed assignments divided by all students.</p></div></div><div><span class="formula-number">03</span><div><strong>Classroom activity</strong><p>Engagement in exercises and group work.</p></div></div></div></article>
-          </div>
-        </section>
-
-        <section class="view" id="view-reports">
-          <div class="report-actions"><div><h2>Attendance reports</h2><p>Review daily and student-wise attendance. Export CSV for your report.</p></div><button class="primary-button" id="exportCsv"><i data-lucide="download"></i> Export CSV</button></div>
-          <div class="stats-grid report-stats"><article class="stat-card"><div class="stat-top"><span>Recorded sessions</span><span class="stat-icon blue"><i data-lucide="calendar-check"></i></span></div><div class="stat-value" id="totalSessions">0</div><div class="stat-foot">Dates with attendance records</div></article><article class="stat-card"><div class="stat-top"><span>Below 75%</span><span class="stat-icon red"><i data-lucide="alert-triangle"></i></span></div><div class="stat-value" id="lowAttendanceCount">0</div><div class="stat-foot">Students to follow up with</div></article><article class="stat-card"><div class="stat-top"><span>Class attendance</span><span class="stat-icon green"><i data-lucide="percent"></i></span></div><div class="stat-value" id="reportAttendanceRate">0%</div><div class="stat-foot">Across all recorded marks</div></article><article class="stat-card"><div class="stat-top"><span>Average engagement</span><span class="stat-icon purple"><i data-lucide="activity"></i></span></div><div class="stat-value" id="reportEngagement">0</div><div class="stat-foot">Out of 100 points</div></article></div>
-          <article class="panel table-panel"><div class="panel-heading"><div><h2>Student-wise attendance</h2><p>Present records ÷ total recorded attendance records</p></div><div class="search-box compact-search"><i data-lucide="search"></i><input id="reportSearch" type="search" placeholder="Search student..." aria-label="Search report"></div></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Roll number</th><th>Present</th><th>Absent</th><th>Sessions</th><th>Attendance</th><th>Warning</th></tr></thead><tbody id="reportTable"></tbody></table></div></article>
-          <article class="panel table-panel"><div class="panel-heading"><div><h2>Daily attendance report</h2><p>Summary by date</p></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Present</th><th>Absent</th><th>Attendance rate</th></tr></thead><tbody id="dailyReportTable"></tbody></table></div></article>
-          <p class="report-footnote"><i data-lucide="shield-check"></i> This is a local college-project demo. Data is saved only in this browser and is not sent to a server.</p>
-        </section>
+        <div class="content-grid">
+          <article class="panel attendance-panel"><div class="panel-heading"><div><h2>Attendance overview</h2><p>Today's student attendance status</p></div><button class="text-btn" data-goto="attendance">View attendance →</button></div><div class="attendance-summary"><div class="donut" id="donut"><div><strong id="donutPct">75%</strong><small>Present</small></div></div><div class="legend"><div><i class="legend-dot green-dot"></i><span>Present</span><b id="legendPresent">6</b></div><div><i class="legend-dot red-dot"></i><span>Absent</span><b id="legendAbsent">1</b></div><div><i class="legend-dot yellow-dot"></i><span>Not marked</span><b id="legendUnmarked">1</b></div></div></div><div class="panel-foot"><span class="tiny-check">✓</span> Attendance is updated from the Attendance page.</div></article>
+          <article class="panel activity-panel"><div class="panel-heading"><div><h2>Class engagement</h2><p>Student participation score</p></div><button class="more-btn" data-goto="engagement">•••</button></div><div class="engagement-feature"><div><strong id="engagementBig">86%</strong><p>Average engagement</p></div><span class="trend-pill">↗ Positive</span></div><div class="bar-chart"><div class="bar-col"><i style="height:45%"></i><small>Mon</small></div><div class="bar-col"><i style="height:67%"></i><small>Tue</small></div><div class="bar-col"><i style="height:56%"></i><small>Wed</small></div><div class="bar-col"><i style="height:83%"></i><small>Thu</small></div><div class="bar-col"><i style="height:72%"></i><small>Fri</small></div><div class="bar-col"><i style="height:92%"></i><small>Sat</small></div><div class="bar-col"><i style="height:78%"></i><small>Sun</small></div></div></article>
+        </div>
+        <article class="panel roster-panel"><div class="panel-heading"><div><h2>Student overview</h2><p>Quick view of your classroom roster</p></div><button class="text-btn" data-goto="students">View all students →</button></div><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>ROLL NO.</th><th>CLASS</th><th>ATTENDANCE</th><th>STATUS</th></tr></thead><tbody id="dashboardRoster"></tbody></table></div></article>
       </section>
-      <footer class="main-footer"><span>Student Attendance & Engagement Dashboard</span><span>Built for BCA Semester 5 · Demo project</span></footer>
+
+      <section class="page" id="page-students">
+        <div class="page-title-row"><div><h1>Students</h1><p>Manage your student roster and profile photos.</p></div><button class="primary-btn" id="addStudentBtn">＋ Add student</button></div>
+        <div class="panel"><div class="toolbar"><input id="studentSearch" placeholder="⌕  Search name or roll number..." /><select id="classFilter"><option value="all">All classes</option><option>BCA V</option><option>BCA III</option><option>BCA I</option></select></div><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>ROLL NO.</th><th>CLASS</th><th>ATTENDANCE</th><th>ENGAGEMENT</th><th>ACTION</th></tr></thead><tbody id="studentsTable"></tbody></table></div></div>
+      </section>
+
+      <section class="page" id="page-attendance">
+        <div class="page-title-row"><div><h1>Attendance</h1><p>Mark and review attendance for your class.</p></div><button class="primary-btn" id="saveAttendance">✓ Save attendance</button></div>
+        <div class="panel"><div class="toolbar attendance-toolbar"><label>Date <input type="date" id="attendanceDate"></label><select id="attendanceClass"><option value="all">All classes</option><option>BCA V</option><option>BCA III</option><option>BCA I</option></select><input id="attendanceSearch" placeholder="⌕  Search student..." /></div><div class="attendance-counts"><span class="count-pill present-pill">● Present <b id="attPresent">6</b></span><span class="count-pill absent-pill">● Absent <b id="attAbsent">1</b></span><span class="count-pill unmarked-pill">● Not marked <b id="attUnmarked">1</b></span></div><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>ROLL NO.</th><th>CLASS</th><th>ATTENDANCE STATUS</th></tr></thead><tbody id="attendanceTable"></tbody></table></div></div>
+      </section>
+
+      <section class="page" id="page-engagement">
+        <div class="page-title-row"><div><h1>Engagement</h1><p>Review participation and class activity scores.</p></div></div><div class="student-card-grid" id="engagementCards"></div>
+      </section>
+
+      <section class="page" id="page-reports">
+        <div class="page-title-row"><div><h1>Reports</h1><p>Summary of attendance and engagement data.</p></div><button class="primary-btn" id="exportCsv">↓ Export CSV</button></div>
+        <div class="stats-grid"><article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon purple">♙</span></div><strong id="reportTotal">8</strong><small>In current roster</small></article><article class="stat-card"><div class="stat-top"><span>Present today</span><span class="stat-icon green">✓</span></div><strong id="reportPresent">6</strong><small>Current selected date</small></article><article class="stat-card"><div class="stat-top"><span>Attendance rate</span><span class="stat-icon blue">％</span></div><strong id="reportRate">75%</strong><small>Of recorded statuses</small></article></div>
+        <div class="panel report-panel"><h2>Attendance report</h2><p>Use Export CSV to open the roster in Excel or another spreadsheet app.</p><div id="reportRows"></div></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="page-title-row"><div><h1>Settings</h1><p>Personalize your admin profile and student photos.</p></div></div>
+        <div class="settings-grid">
+          <article class="panel settings-panel"><h2>Admin profile</h2><p>Choose the display name and photo shown in the sidebar.</p><div class="admin-edit"><img id="settingsAdminAvatar" src="https://i.pravatar.cc/120?img=12" alt="Admin preview"><div><b id="settingsAdminNamePreview">Ram Pratap Maurya</b><small>Administrator</small><label class="upload-btn">Upload photo<input id="adminPhotoInput" type="file" accept="image/*"></label></div></div><label class="field-label">Display name<input id="adminNameInput" value="Ram Pratap Maurya" maxlength="60"></label><button class="primary-btn" id="saveAdmin">Save profile</button></article>
+          <article class="panel settings-panel"><h2>Student profile photos</h2><p>Sample photos are included. Later, open a student and upload your own photo.</p><div class="tip-box">Tip: use a clear JPG or PNG image. Photos are saved in this browser for this demo; they are not uploaded to a server.</div><button class="secondary-btn" id="resetSamples">Restore sample students</button></article>
+        </div>
+      </section>
+      <footer>© 2026 CampusPulse <span>Made for smarter classrooms</span></footer>
     </main>
   </div>
 
-  <div class="modal-backdrop" id="studentModal" aria-hidden="true">
-    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="studentModalTitle">
-      <div class="modal-heading"><div><p class="eyebrow">STUDENT DIRECTORY</p><h2 id="studentModalTitle">Add student</h2></div><button class="icon-button" id="closeStudentModal" aria-label="Close dialog"><i data-lucide="x"></i></button></div>
-      <form id="studentForm">
-        <input type="hidden" id="editStudentId">
-        <label for="studentName">Full name</label><input id="studentName" required maxlength="80" placeholder="e.g. Aditi Sharma">
-        <div class="form-row"><div><label for="studentRoll">Roll number</label><input id="studentRoll" required maxlength="20" placeholder="BCA-025"></div><div><label for="studentClass">Class / section</label><input id="studentClass" required maxlength="30" placeholder="BCA-5A"></div></div>
-        <label for="studentEmail">Email address</label><input id="studentEmail" type="email" required maxlength="100" placeholder="student@example.com">
-        <div class="modal-actions"><button type="button" class="secondary-button" id="cancelStudent">Cancel</button><button type="submit" class="primary-button"><i data-lucide="check"></i> Save student</button></div>
-      </form>
-    </section>
-  </div>
-  <div class="confirm-backdrop" id="confirmBackdrop" aria-hidden="true"><div class="confirm-box" role="alertdialog" aria-modal="true"><div class="confirm-icon"><i data-lucide="trash-2"></i></div><h2>Delete this student?</h2><p>This also removes the student's attendance and engagement records from this demo browser.</p><div class="modal-actions"><button class="secondary-button" id="cancelDelete">Cancel</button><button class="danger-button" id="confirmDelete">Delete student</button></div></div></div>
+  <dialog id="studentDialog">
+    <form method="dialog" id="studentForm">
+      <div class="dialog-head"><div><h2 id="dialogTitle">Add student</h2><p>Enter student details and select a profile photo.</p></div><button class="close-btn" value="cancel" aria-label="Close">×</button></div>
+      <input type="hidden" id="editStudentId">
+      <div class="photo-picker"><img id="studentPhotoPreview" src="https://i.pravatar.cc/120?img=1" alt="Student photo preview"><label class="upload-btn">Choose photo<input type="file" id="studentPhotoInput" accept="image/*"></label><small>Or leave it to use a sample avatar.</small></div>
+      <label class="field-label">Full name<input id="studentName" required maxlength="70" placeholder="e.g. Aditi Sharma"></label>
+      <div class="form-row"><label class="field-label">Roll number<input id="studentRoll" required maxlength="20" placeholder="e.g. BCA-009"></label><label class="field-label">Class<select id="studentClass"><option>BCA V</option><option>BCA III</option><option>BCA I</option></select></label></div>
+      <div class="form-row"><label class="field-label">Attendance (%)<input id="studentAttendance" type="number" min="0" max="100" value="90"></label><label class="field-label">Engagement score<input id="studentEngagement" type="number" min="0" max="100" value="85"></label></div>
+      <div class="dialog-actions"><button class="secondary-btn" value="cancel">Cancel</button><button class="primary-btn" id="saveStudent" value="default">Save student</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
   <script src="script.js"></script>
 </body>
 </html>
